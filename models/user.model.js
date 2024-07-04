@@ -11,10 +11,6 @@ const user = new mongoose.Schema(
       type: String,
       required: true,
     },
-    name: {
-      type: String,
-      required: true,
-    },
   },
   { timestamps: true }
 );
