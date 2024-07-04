@@ -105,3 +105,25 @@ export const getspecificCourse = async (req, res) => {
     });
   }
 };
+
+export const updateCourse = async (req, res) => {
+  try {
+    const idtoupdate = req.params.id;
+    const course = await Course.findOne({ _id: idtoupdate });
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+    const datatoUpdate = req.body;
+    const courseUpdating = await Course.findByIdAndUpdate(
+      idtoupdate,
+      datatoUpdate,
+      { new: true }
+    );
+    courseUpdating.save();
+    res.status(200).json({ message: "Course updated successfully" });
+  } catch (error) {
+    res.status(500).json({
+      message: "No such course found",
+    });
+  }
+};
