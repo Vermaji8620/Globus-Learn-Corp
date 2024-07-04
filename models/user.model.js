@@ -15,11 +15,6 @@ const user = new mongoose.Schema(
       type: String,
       required: true,
     },
-    universityRoll: {
-      type: Number,
-      unique: true,
-      required: true,
-    },
   },
   { timestamps: true }
 );

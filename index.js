@@ -25,12 +25,15 @@ app.get("/", (req, res) => {
 //   userRoute
 // );
 
+// the below one is for the global catch
 app.use((err, req, res, next) => {
   res.status(500).json({
     message: `Error caught in global catch`,
     error: err.message,
   });
 });
+
+// below i have made the async function for the connection to the mongodb database and then listening to the port
 
 (async () => {
   try {
