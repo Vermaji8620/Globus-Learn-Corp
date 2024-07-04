@@ -90,4 +90,18 @@ export const getCourse = async (req, res) => {
       message: error.message,
     });
   }
-}
+};
+
+export const getspecificCourse = async (req, res) => {
+  try {
+    const course = await Course.findOne({ _id: req.params.id });
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+    res.status(200).json({ course });
+  } catch (error) {
+    res.status(500).json({
+      message: "No such course found",
+    });
+  }
+};
