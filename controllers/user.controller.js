@@ -119,3 +119,57 @@ export const signIn = async (req, res) => {
     });
   }
 };
+
+// now do the user verification and logout functions
+
+export const userVerification = async (req, res, next) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) {
+      res.status(401).json({
+        message: "You are not logged in",
+      });
+      return;
+    }
+
+    const verifytoken = jwt.verify(token, process.env.SIGNATURE);
+    if (!verifytoken) {
+      return res.status(403).json({
+        message: "You are not logged in",
+      });
+    }
+
+    req.currentUserLoggedIn = verifytoken;
+    next();
+  } catch (err) {
+    res.status(500).json({
+      message: "Some error occured",
+      error: err.message,
+    });
+  }
+};
+
+// for the deriving of the user details for the user whos logged in
+export const userDetails = async (req, res) => {
+  const _id = req.params.id;
+  try {
+    const searchById = req.currentUserLoggedIn.findmail_id === _id;
+    if (!searchById) {
+      res.status(401).json({
+        message: "You can just fetch your own details",
+      });
+      return;
+    }
+    let fetchDatabase = await User.findOne({ _id });
+    fetchDatabase = { ...fetchDatabase._doc, password: undefined };
+    res.status(200).json({
+      message: "User is found",
+      user: fetchDatabase,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "there got thrown in catch",
+      error: error.message,
+    });
+  }
+};
