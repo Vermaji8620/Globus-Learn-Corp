@@ -173,3 +173,23 @@ export const userDetails = async (req, res) => {
     });
   }
 };
+
+// for logging out, we will clear the cookie...just this much to do
+export const logout = async (req, res) => {
+  try {
+    const idtobeloggedout = req.params.id;
+    if (idtobeloggedout !== req.currentUserLoggedIn.findmail_id) {
+      return res.status(403).json({
+        message: "Logout Failed",
+      });
+    }
+    res.clearCookie("token").status(200).json({
+      message: "user logged out successfully",
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: "Logout error",
+      error: err.message,
+    });
+  }
+};
