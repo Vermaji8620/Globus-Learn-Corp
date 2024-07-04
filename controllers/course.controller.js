@@ -127,3 +127,19 @@ export const updateCourse = async (req, res) => {
     });
   }
 };
+
+export const deleteCourse = async (req, res) => {
+  try {
+    const idtodelete = req.params.id;
+    const course = await Course.findOne({ _id: idtodelete });
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+    await Course.findByIdAndDelete(idtodelete);
+    res.status(200).json({ message: "Course deleted successfully" });
+  } catch (error) {
+    res.status(500).json({
+      message: "No such course found",
+    });
+  }
+};
