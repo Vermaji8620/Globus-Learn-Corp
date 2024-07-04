@@ -1,6 +1,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import userRoute from "./routes/user.route.js";
+import courseRoute from "./routes/course.route.js";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
@@ -16,14 +17,8 @@ app.get("/", (req, res) => {
   res.send(`This is a testing URL`);
 });
 
-app.use(
-  "/user",
-  (req, res, next) => {
-    console.log("hoga");
-    next();
-  },
-  userRoute
-);
+app.use("/user", userRoute);
+app.use("/course", courseRoute);
 
 // the below one is for the global catch
 app.use((err, req, res, next) => {
