@@ -3,8 +3,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { body, validationResult } from "express-validator";
 
-// In this function, I am validating the user input fields as its very easy to bypass the frontend
-export const userValidationRules = () => {
+// In this function, I am validating the user input fields as its very easy to bypass the frontend (for signup)
+export const userValidationRulesSignUp = () => {
   return [
     body("email").isEmail().withMessage("Invalid email"),
     // Password must be at least of 5 length
@@ -12,6 +12,17 @@ export const userValidationRules = () => {
       .isLength({ min: 5 })
       .withMessage("Password must be at least 5 characters long"),
     body("name").not().isEmpty().withMessage("Name cannot be empty"),
+  ];
+};
+
+// In this function, I am validating the user input fields as its very easy to bypass the frontend (for signin)
+export const userValidationRulesSignIn = () => {
+  return [
+    body("email").isEmail().withMessage("Invalid email"),
+    // Password must be at least of 5 length
+    body("password")
+      .isLength({ min: 5 })
+      .withMessage("Password must be at least 5 characters long"),
   ];
 };
 
@@ -70,3 +81,41 @@ export const signUp = async (req, res) => {
   }
 };
 
+export const signIn = async (req, res) => {
+  try {
+    const email = req.body.email;
+    if (!email || !req.body.password) {
+      return res.status(401).json({
+        message: "All fields are required",
+      });
+    }
+    let findmail = await User.findOne({ email });
+    if (!findmail) {
+      return res.status(401).json({
+        message: "Invalid login credentials",
+      });
+    }
+    const dbpassword = findmail.password;
+    const password = req.body.password;
+    const hashpasswordchck = bcrypt.compareSync(password, dbpassword);
+    if (!hashpasswordchck) {
+      return res.status(403).json({
+        message: "Invalid login credentials",
+      });
+    }
+
+    const token = jwt.sign(
+      { findmail_id: findmail._id },
+      process.env.SIGNATURE
+    );
+
+    res.cookie("token", token, { httpOnly: true }).status(200).json({
+      message: "User logged in successfully",
+    });
+  } catch (error) {
+    res.status(403).json({
+      message: "something went wrong in logging in",
+      error: error.message,
+    });
+  }
+};
