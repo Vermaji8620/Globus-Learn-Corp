@@ -34,3 +34,16 @@ export const createQuestion = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const getQuestions = async (req, res) => {
+  try {
+    const course = req.params.courseId;
+    const getqstns = await Course.findById(course).populate("questions");
+    if (!getqstns) {
+      return res.status(400).json({ message: "Course not found" });
+    }
+    res.status(200).json(getqstns.questions);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
