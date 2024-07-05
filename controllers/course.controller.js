@@ -48,8 +48,15 @@ export const validateCourse = [
 
 export const createCourse = async (req, res) => {
   try {
-    const { name, description, teacher, price, rating, durationInHours } =
-      req.body;
+    const {
+      name,
+      description,
+      teacher,
+      price,
+      rating,
+      durationInHours,
+      questions,
+    } = req.body;
 
     if (
       !name ||
@@ -69,11 +76,12 @@ export const createCourse = async (req, res) => {
       rating,
       teacher,
       durationInHours,
+      questions,
     });
 
     await course.save();
 
-    res.status(201).json({ course });
+    res.status(201).json({ message: "Course created successfully" });
   } catch (error) {
     res.status(500).send({
       message: error.message,
