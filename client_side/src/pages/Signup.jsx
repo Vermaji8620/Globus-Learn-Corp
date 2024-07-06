@@ -40,15 +40,15 @@ const Signup = () => {
   };
   return (
     <div className="w-full flex">
-      <div className="w-1/2  m-10 flex justify-center">
+      <div className="md:w-1/2 m-10 hidden md:flex justify-center">
         <div className="w-[80%]">
-          <img src={signup} className="rounded-[50px]" alt="" />
+          <img src={signup} className=" rounded-[50px]" alt="" />
         </div>
       </div>
-      <div className="w-1/2 ">
+      <div className="md:w-1/2 m-6">
         <form
           onSubmit={submitfunc}
-          className="w-[90%] bg-white rounded-[50px] flex flex-col gap-10 m-10 p-32"
+          className="md:w-[90%] bg-white md:rounded-[50px] rounded-[10px] flex flex-col gap-10 md:m-10 p-10 md:p-32"
         >
           <div className="text-center font-bold">Sign Up</div>
           <div className="flex flex-col gap-4">
