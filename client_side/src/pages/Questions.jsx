@@ -53,11 +53,15 @@ const Questions = () => {
     })();
   }, [navigate, courseId]);
   return (
-    <div className="w-full flex">
-      <div className="w-1/2  m-10 flex justify-center">
+    <div className="w-full flex md:flex-row gap-10 flex-col">
+      <div className="md:w-1/2 mt-10 md:m-10 flex justify-center">
         <div className="flex flex-col gap-6">
-          <img src={logofrocourse} className="rounded-[50px]" alt="" />
-          <div className="pt-10 pl-6 bg-white rounded-[20px] pb-6 gap-6 flex-col flex">
+          <img
+            src={logofrocourse}
+            className="hidden md:inline-block rounded-[50px]"
+            alt=""
+          />
+          <div className="pt-10 pl-10 pr-10 bg-white rounded-[20px] pb-6 gap-6 flex-col flex">
             <p>
               <span className="font-bold">Name of the course</span> -{" "}
               {specificCourse.name}
@@ -83,8 +87,8 @@ const Questions = () => {
           </div>
         </div>
       </div>
-      <div className="w-1/2 ">
-        <div className="w-[90%] bg-white rounded-[50px] flex flex-col gap-10 m-10 p-32">
+      <div className="md:w-1/2">
+        <div className="md:w-[90%] bg-white rounded-[30px] md:rounded-[50px] flex flex-col gap-10 md:m-10 md:p-32 p-10">
           <div className="text-center font-bold text-3xl">Question Bank</div>
 
           {questionsarray.map((question) => (
