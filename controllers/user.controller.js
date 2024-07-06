@@ -64,6 +64,7 @@ export const signUp = async (req, res) => {
       const token = jwt.sign({ findmail_id: user._id }, process.env.SIGNATURE);
       // here i will restrict the cookie to the server side only and not to the client side, so i am using httponly: true
       res.cookie("token", token, { httpOnly: true }).status(200).json({
+        user, 
         message: "user created successfully",
       });
     } catch (err) {
@@ -110,6 +111,7 @@ export const signIn = async (req, res) => {
     );
 
     res.cookie("token", token, { httpOnly: true }).status(200).json({
+      user: findmail,
       message: "User logged in successfully",
     });
   } catch (error) {
