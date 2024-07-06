@@ -27,14 +27,12 @@ const Login = () => {
       });
       const res = await loginsent.json();
       localStorage.setItem("id", res.user._id);
-      console.log("Login Sent", res);
       setEmailstate("");
       setPasswordstate("");
       navigate("/");
     } catch (error) {
       console.error("Error:", error);
     }
-    console.log("Submitted");
   };
   return (
     <div className="w-full flex">
