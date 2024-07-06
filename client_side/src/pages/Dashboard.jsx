@@ -1,7 +1,22 @@
+import { useEffect, useState } from "react";
 import girl from "../assets/girl.png";
 import EachCourse from "../components/EachCourse";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const [coursearray, setCoursearray] = useState([]);
+  useEffect(() => {
+    try {
+      (async () => {
+        const data = await fetch("/course/getcourse");
+        const res = await data.json();
+        setCoursearray(res.courses);
+      })();
+    } catch (error) {
+      console.log(error.message);
+    }
+  }, [navigate]);
   return (
     <div className="border border-red-400">
       <div className="bg-white flex ">
@@ -23,15 +38,21 @@ const Dashboard = () => {
         OUR COURSES
       </h1>
       <div className="flex flex-wrap gap-24 w-[80%] mx-auto pt-16">
-        <EachCourse />
-        <EachCourse />
-        <EachCourse />
-        <EachCourse />
-        <EachCourse />
-        <EachCourse />
-        <EachCourse />
-        <EachCourse />
-        <EachCourse />
+        {coursearray.map((course) => {
+          return (
+            <EachCourse
+              key={course._id}
+              name={course.name}
+              description={course.description}
+              price={course.price}
+              rating={course.rating}
+              teacher={course.teacher}
+              durationInHours={course.durationInHours}
+              questions={course.questions}
+              id={course._id}
+            />
+          );
+        })}
       </div>
     </div>
   );

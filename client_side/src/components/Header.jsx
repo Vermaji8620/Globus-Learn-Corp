@@ -18,7 +18,7 @@ const Header = () => {
 
   const location = useLocation();
   return (
-    <div className="w-full flex justify-end p-5 bg-[#c895c8ec]">
+    <div className="w-full flex justify-end p-3 bg-[#c895c8ec]">
       <div className="w-1/2">
         <Link to="/">
           <img src={logo} className="w-[100px] rounded-[50px]" alt="" />
