@@ -36,15 +36,15 @@ const Login = () => {
   };
   return (
     <div className="w-full flex">
-      <div className="w-1/2  m-10 flex justify-center">
-        <div className="w-[80%]">
+      <div className="md:w-1/2 hidden md:m-10 md:flex justify-center">
+        <div className="md:w-[80%]">
           <img src={login} className="rounded-[50px]" alt="" />
         </div>
       </div>
-      <div className="w-1/2 ">
+      <div className="md:w-1/2 w-[90%] md:mt-0 mt-10 mx-auto">
         <form
           onSubmit={submitfunc}
-          className="w-[90%] bg-white rounded-[50px] flex flex-col gap-10 m-10 p-44"
+          className="md:w-[90%] bg-white md:rounded-[50px] rounded-lg md:mb-0 mb-10 flex flex-col gap-10 md:m-10 p-12 md:p-44"
         >
           <div className="text-center font-bold">Log In</div>
           <div className="flex flex-col gap-4">
