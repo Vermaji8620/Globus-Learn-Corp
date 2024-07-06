@@ -9,6 +9,7 @@ export default defineConfig({
       "/user": "http://localhost:3000",
       "/question": "http://localhost:3000",
       "/course": "http://localhost:3000",
+      "/answer": "http://localhost:3000",
     },
   },
 });
