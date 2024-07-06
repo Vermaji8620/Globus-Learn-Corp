@@ -1,11 +1,17 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import login from "../assets/login.jpg";
 
 const Login = () => {
   const [emailstate, setEmailstate] = useState("");
   const [passwordstate, setPasswordstate] = useState("");
-  const navigate  = useNavigate();
+  const navigate = useNavigate();
+  useEffect(() => {
+    const userId = localStorage.getItem("id");
+    if (userId) {
+      navigate("/");
+    }
+  }, [navigate]);
   const submitfunc = async (e) => {
     e.preventDefault();
     try {

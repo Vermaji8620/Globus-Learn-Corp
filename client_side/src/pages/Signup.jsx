@@ -1,12 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
 import signup from "../assets/signup.jpg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Signup = () => {
   const navigate = useNavigate();
   const [nameState, setNameState] = useState("");
   const [emailstate, setEmailstate] = useState("");
   const [passwordstate, setPasswordstate] = useState("");
+  useEffect(() => {
+    const userId = localStorage.getItem("id");
+    if (userId) {
+      navigate("/");
+    }
+  }, [navigate]);
   const submitfunc = async (e) => {
     e.preventDefault();
     try {
