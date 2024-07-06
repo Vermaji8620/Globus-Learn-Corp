@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import logofromcourse from "../assets/logoforcourse.jpg";
 
 import PropTypes from "prop-types";
@@ -21,6 +22,9 @@ const EachCourse = ({
         <div className="text-center font-bold">${price}</div>
         <div className="text-center font-bold">{rating}</div>
       </div>
+      <Link to={`/quizlist/${id}`} className="text-center text-green-500 font-bold">
+        Go the questions
+      </Link>
     </div>
   );
 };

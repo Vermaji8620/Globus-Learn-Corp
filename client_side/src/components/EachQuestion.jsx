@@ -1,8 +1,10 @@
-const EachQuestion = () => {
+import PropTypes from "prop-types";
+
+const EachQuestion = ({ text }) => {
   return (
     <div className="flex flex-col gap-4">
       <label htmlFor="" className="font-bold">
-        Question
+        {text}
       </label>
       <input
         type="text"
@@ -11,6 +13,10 @@ const EachQuestion = () => {
       />
     </div>
   );
+};
+
+EachQuestion.propTypes = {
+  text: PropTypes.string.isRequired,
 };
 
 export default EachQuestion;
