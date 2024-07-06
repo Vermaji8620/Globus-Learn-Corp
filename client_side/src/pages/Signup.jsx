@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import loginimg from "../assets/loginimg.jpg";
+import signup from "../assets/signup.jpg";
 
 const Signup = () => {
   return (
     <div className="w-full flex">
       <div className="w-1/2  m-10 flex justify-center">
-        <div className="w-[90%]">
-          <img src={loginimg} className="rounded-[50px]" alt="" />
+        <div className="w-[80%]">
+          <img src={signup} className="rounded-[50px]" alt="" />
         </div>
       </div>
       <div className="w-1/2 ">
