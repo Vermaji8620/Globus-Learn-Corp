@@ -14,7 +14,7 @@ const EachCourse = ({
   id,
 }) => {
   return (
-    <div className="bg-white w-[25%] cursor-pointer rounded-lg p-2 flex flex-col gap-6">
+    <div className="bg-white md:w-[28%] w-[80%] md:mx-0 mx-auto cursor-pointer rounded-lg p-2 flex flex-col gap-6">
       <img src={logofromcourse} className="" alt="" />
       <p className="text-center font-bold">{name}</p>
       <p className="text-center">{description}</p>
@@ -22,7 +22,10 @@ const EachCourse = ({
         <div className="text-center font-bold">${price}</div>
         <div className="text-center font-bold">{rating}</div>
       </div>
-      <Link to={`/quizlist/${id}`} className="text-center text-green-500 font-bold">
+      <Link
+        to={`/quizlist/${id}`}
+        className="text-center text-green-500 font-bold"
+      >
         Go to the questions
       </Link>
     </div>
