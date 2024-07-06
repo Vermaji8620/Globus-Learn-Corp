@@ -27,25 +27,6 @@ const course = new mongoose.Schema(
       required: true,
     },
     questions: [{ type: mongoose.Schema.Types.ObjectId, ref: "Question" }],
-    // userResponses: [
-    //   {
-    //     userId: {
-    //       type: mongoose.Schema.Types.ObjectId,
-    //       ref: "User",
-    //       required: true,
-    //     },
-    //     answers: [
-    //       {
-    //         questionId: {
-    //           type: mongoose.Schema.Types.ObjectId,
-    //           ref: "Question",
-    //           required: true,
-    //         },
-    //         answerText: { type: String, required: true },
-    //       },
-    //     ],
-    //   },
-    // ],
   },
   { timestamps: true }
 );

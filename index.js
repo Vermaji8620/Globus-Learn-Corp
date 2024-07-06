@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import userRoute from "./routes/user.route.js";
 import courseRoute from "./routes/course.route.js";
 import questionRoute from "./routes/question.route.js";
+import answerRoute from "./routes/answer.route.js";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
@@ -21,6 +22,7 @@ app.get("/", (req, res) => {
 app.use("/user", userRoute);
 app.use("/course", courseRoute);
 app.use("/question", questionRoute);
+app.use("/answer", answerRoute);
 
 // the below one is for the global catch
 app.use((err, req, res, next) => {
