@@ -1,6 +1,7 @@
 import { Course } from "../models/course.model.js";
 import { body, validationResult } from "express-validator";
 import { User } from "../models/user.model.js";
+import { Question } from "../models/question.model.js";
 
 // Middleware for course validation
 export const validateCourse = [
@@ -76,16 +77,6 @@ export const createCourse = async (req, res) => {
 
     await course.save();
 
-    // await User.findByIdAndUpdate(
-    //   { _id: req.currentUserLoggedIn.findmail_id },
-    //   {
-    //     $push: {
-    //       myCourses: course._id,
-    //     },
-    //   },
-    //   { new: true }
-    // );
-
     await User.findByIdAndUpdate(
       { _id: req.currentUserLoggedIn.findmail_id },
       {
@@ -96,7 +87,7 @@ export const createCourse = async (req, res) => {
       { new: true }
     );
 
-    res.status(201).json({course,  message: "Course created successfully" });
+    res.status(201).json({ course, message: "Course created successfully" });
   } catch (error) {
     res.status(500).send({
       message: error.message,
@@ -143,7 +134,10 @@ export const updateCourse = async (req, res) => {
       { new: true }
     );
     courseUpdating.save();
-    res.status(200).json({ message: "Course updated successfully" });
+    res.status(200).json({
+      courseUpdated: courseUpdating,
+      message: "Course updated successfully",
+    });
   } catch (error) {
     res.status(500).json({
       message: "No such course found",
@@ -158,7 +152,29 @@ export const deleteCourse = async (req, res) => {
     if (!course) {
       return res.status(404).json({ message: "Course not found" });
     }
+
+    course.questions.forEach(async (qstn) => {
+      await Question.findByIdAndDelete(qstn);
+    });
+
     await Course.findByIdAndDelete(idtodelete);
+
+    const deltedCourseInUser = await User.findByIdAndUpdate(
+      {
+        _id: req.currentUserLoggedIn.findmail_id,
+      },
+      {
+        $pull: {
+          myCourses: idtodelete,
+        },
+      },
+      {
+        new: true,
+      }
+    );
+
+    await deltedCourseInUser.save();
+
     res.status(200).json({ message: "Course deleted successfully" });
   } catch (error) {
     res.status(500).json({
