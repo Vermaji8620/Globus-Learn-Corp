@@ -56,15 +56,16 @@ export const signUp = async (req, res) => {
     const hashpassword = bcrypt.hashSync(password, salting);
 
     try {
-      const user = await User.create({
+      let user = await User.create({
         ...req.body,
         password: hashpassword,
       });
 
       const token = jwt.sign({ findmail_id: user._id }, process.env.SIGNATURE);
       // here i will restrict the cookie to the server side only and not to the client side, so i am using httponly: true
+      user = { ...user._doc, password: undefined };
       res.cookie("token", token, { httpOnly: true }).status(200).json({
-        user, 
+        user,
         message: "user created successfully",
       });
     } catch (err) {
@@ -109,6 +110,8 @@ export const signIn = async (req, res) => {
       { findmail_id: findmail._id },
       process.env.SIGNATURE
     );
+
+    findmail = { ...findmail._doc, password: undefined };
 
     res.cookie("token", token, { httpOnly: true }).status(200).json({
       user: findmail,

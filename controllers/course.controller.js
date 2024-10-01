@@ -1,5 +1,6 @@
 import { Course } from "../models/course.model.js";
 import { body, validationResult } from "express-validator";
+import { User } from "../models/user.model.js";
 
 // Middleware for course validation
 export const validateCourse = [
@@ -48,15 +49,8 @@ export const validateCourse = [
 
 export const createCourse = async (req, res) => {
   try {
-    const {
-      name,
-      description,
-      teacher,
-      price,
-      rating,
-      durationInHours,
-      questions,
-    } = req.body;
+    const { name, description, teacher, price, rating, durationInHours } =
+      req.body;
 
     if (
       !name ||
@@ -76,12 +70,33 @@ export const createCourse = async (req, res) => {
       rating,
       teacher,
       durationInHours,
-      questions,
+      questions: [],
+      creatorOfCourse: req.currentUserLoggedIn.findmail_id,
     });
 
     await course.save();
 
-    res.status(201).json({ message: "Course created successfully" });
+    // await User.findByIdAndUpdate(
+    //   { _id: req.currentUserLoggedIn.findmail_id },
+    //   {
+    //     $push: {
+    //       myCourses: course._id,
+    //     },
+    //   },
+    //   { new: true }
+    // );
+
+    await User.findByIdAndUpdate(
+      { _id: req.currentUserLoggedIn.findmail_id },
+      {
+        $push: {
+          myCourses: course._id,
+        },
+      },
+      { new: true }
+    );
+
+    res.status(201).json({course,  message: "Course created successfully" });
   } catch (error) {
     res.status(500).send({
       message: error.message,

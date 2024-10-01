@@ -27,6 +27,10 @@ const course = new mongoose.Schema(
       required: true,
     },
     questions: [{ type: mongoose.Schema.Types.ObjectId, ref: "Question" }],
+    creatorOfCourse: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
   { timestamps: true }
 );
